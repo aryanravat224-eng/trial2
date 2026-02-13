@@ -3,80 +3,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Gatsby Romance</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>For Vacha - A Gatsby Romance</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
-
 <style>
-/* 🔒 YOUR ORIGINAL CSS — UNCHANGED */
 *{margin:0;padding:0;box-sizing:border-box}
 body,html{width:100%;min-height:100vh;overflow-x:hidden;font-family:'Playfair Display',serif;background:#0a0a0a}
 body{background:linear-gradient(135deg,#0a0a0a 0%,#1a0d0d 50%,#2b0000 100%);position:relative}
 body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(212,175,55,0.02) 2px,rgba(212,175,55,0.02) 4px);pointer-events:none;z-index:1}
-.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;position:relative;z-index:2;opacity:0;pointer-events:none;transition:opacity 0.8s ease}
+.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;position:relative;z-index:2;opacity:0;pointer-events:none;transition:opacity 0.8s ease;flex-direction:column}
 .screen.active{opacity:1;pointer-events:auto}
-.password-screen{flex-direction:column}
 .deco-corner{position:absolute;width:80px;height:80px;border:2px solid rgba(212,175,55,0.3)}
 .deco-corner.top-left{top:20px;left:20px;border-right:none;border-bottom:none}
 .deco-corner.top-right{top:20px;right:20px;border-left:none;border-bottom:none}
 .deco-corner.bottom-left{bottom:20px;left:20px;border-right:none;border-top:none}
 .deco-corner.bottom-right{bottom:20px;right:20px;border-left:none;border-top:none}
-.title-large{font-family:'Cinzel',serif;font-size:clamp(2rem,6vw,4rem);color:#d4af37;letter-spacing:0.2em;text-align:center;margin-bottom:1.5rem;text-shadow:0 0 30px rgba(212,175,55,0.5)}
+.title-large{font-family:'Cinzel',serif;font-size:clamp(2rem,6vw,4rem);color:#d4af37;letter-spacing:0.2em;text-align:center;margin-bottom:1.5rem;text-shadow:0 0 30px rgba(212,175,55,0.5);animation:fadeIn 1.5s ease-out}
 .subtitle{font-size:clamp(1rem,2.5vw,1.3rem);color:#d4af37;letter-spacing:0.15em;text-align:center;margin-bottom:2rem;opacity:0.8}
-.password-input{width:100%;max-width:400px;padding:1.2rem 1.5rem;background:rgba(0,0,0,0.6);border:2px solid rgba(212,175,55,0.4);color:#d4af37;font-size:1.1rem;text-align:center;letter-spacing:0.1em;outline:none}
-.btn-gold{padding:1rem 3rem;background:transparent;border:2px solid #d4af37;color:#d4af37;font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.2em;cursor:pointer;margin-top:1.5rem}
-.error-msg{color:#d4af37;font-size:0.9rem;margin-top:1rem;opacity:0;min-height:1.5rem}
+.password-input{width:100%;max-width:400px;padding:1.2rem 1.5rem;background:rgba(0,0,0,0.6);border:2px solid rgba(212,175,55,0.4);color:#d4af37;font-size:1.1rem;font-family:'Playfair Display',serif;text-align:center;letter-spacing:0.1em;outline:none;transition:all 0.3s ease}
+.password-input:focus{border-color:#d4af37;box-shadow:0 0 25px rgba(212,175,55,0.3)}
+.btn-gold{padding:1rem 3rem;background:transparent;border:2px solid #d4af37;color:#d4af37;font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.2em;cursor:pointer;transition:all 0.3s ease;margin-top:1.5rem}
+.btn-gold:hover{background:#d4af37;color:#000;box-shadow:0 0 30px rgba(212,175,55,0.6);transform:translateY(-2px)}
+.error-msg{color:#d4af37;font-size:0.9rem;margin-top:1rem;opacity:0;transition:opacity 0.3s ease;min-height:1.5rem}
 .error-msg.show{opacity:0.8}
-
+.shake{animation:shake 0.5s ease}
+.gatsby-quote{font-size:clamp(1.1rem,3vw,1.6rem);color:#d4af37;font-style:italic;line-height:1.8;max-width:700px;margin:2rem auto;opacity:0.9;position:relative;padding:2rem}
+.gatsby-quote::before,.gatsby-quote::after{content:'"';font-size:3rem;color:rgba(212,175,55,0.3);font-family:'Great Vibes',cursive}
 .game-container{max-width:600px;width:100%;background:rgba(0,0,0,0.5);border:2px solid rgba(212,175,55,0.3);padding:2rem;position:relative}
 .game-title{font-family:'Cinzel',serif;font-size:clamp(1.5rem,4vw,2.5rem);color:#d4af37;text-align:center;margin-bottom:2rem;letter-spacing:0.15em}
 .game-instructions{color:#d4af37;text-align:center;margin-bottom:2rem;opacity:0.8;font-size:1.1rem}
-
-.bubble-area{position:relative;width:100%;height:400px;border:1px solid rgba(212,175,55,0.2);overflow:hidden;cursor:pointer;background:linear-gradient(180deg,rgba(0,0,0,0.3),rgba(43,0,0,0.2))}
-.bubble{position:absolute;width:50px;height:50px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,0.8),rgba(212,175,55,0.6));border:2px solid rgba(212,175,55,0.5);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;color:#000;font-size:0.9rem;font-weight:600;cursor:pointer;animation:floatUp 4s ease-in infinite;box-shadow:0 0 20px rgba(212,175,55,0.4)}
-
+.bubble-area{position:relative;width:100%;height:400px;border:1px solid rgba(212,175,55,0.2);overflow:hidden;background:linear-gradient(180deg,rgba(0,0,0,0.3),rgba(43,0,0,0.2))}
+.bubble{position:absolute;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,0.8),rgba(212,175,55,0.6));border:2px solid rgba(212,175,55,0.5);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;color:#000;font-size:1rem;font-weight:600;cursor:pointer;animation:floatUp 5s ease-in infinite;box-shadow:0 0 20px rgba(212,175,55,0.4)}
 .collected-words{display:flex;justify-content:center;gap:1rem;margin-top:2rem;flex-wrap:wrap}
 .word-slot{padding:0.8rem 1.5rem;border:2px solid rgba(212,175,55,0.3);color:#d4af37;font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:0.1em;min-width:80px;text-align:center}
 .word-slot.filled{border-color:#d4af37;background:rgba(212,175,55,0.1);box-shadow:0 0 15px rgba(212,175,55,0.3)}
-
 .quiz-question{background:rgba(0,0,0,0.4);padding:2rem;margin-bottom:1.5rem;border-left:3px solid #d4af37}
 .quiz-question h3{color:#d4af37;font-family:'Cinzel',serif;margin-bottom:1.5rem;font-size:1.3rem;letter-spacing:0.1em}
 .quiz-options{display:flex;flex-direction:column;gap:1rem}
 .quiz-option{padding:1rem;background:rgba(0,0,0,0.5);border:2px solid rgba(212,175,55,0.3);color:#d4af37;font-size:1rem;cursor:pointer;transition:all 0.3s ease;text-align:left}
-.quiz-option.correct{border-color:#d4af37;background:rgba(212,175,55,0.2)}
-
-.green-light-area{position:relative;width:100%;height:400px;background:linear-gradient(180deg,#000,#0a0a0a);overflow:hidden;cursor:grab}
-.green-light{position:absolute;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,#00ff88,#00cc66);box-shadow:0 0 60px #00ff88,0 0 120px rgba(0,255,136,0.5);top:50%;left:50%;transform:translate(-50%,-50%) scale(0.5);opacity:0.3;transition:all 0.5s ease}
+.quiz-option:hover{border-color:#d4af37;background:rgba(212,175,55,0.1)}
+.quiz-option.correct{border-color:#d4af37;background:rgba(212,175,55,0.2);animation:pulse 0.5s ease}
+.green-light-area{position:relative;width:100%;height:400px;background:linear-gradient(180deg,#000,#0a0a0a);overflow:hidden;cursor:grab;border:1px solid rgba(212,175,55,0.2)}
+.green-light{position:absolute;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,#00ff88,#00cc66);box-shadow:0 0 60px #00ff88,0 0 120px rgba(0,255,136,0.5);top:50%;left:50%;transform:translate(-50%,-50%) scale(0.5);opacity:0.4;transition:all 0.5s ease}
 .green-light.reached{transform:translate(-50%,-50%) scale(2);opacity:1}
-
-@keyframes floatUp{0%{transform:translateY(0) scale(0.8);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-400px) scale(1.2);opacity:0}}
+.reach-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(212,175,55,0.6);font-family:'Cinzel',serif;font-size:1.2rem;letter-spacing:0.2em;pointer-events:none}
+.proposal-question{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,3.5rem);color:#d4af37;letter-spacing:0.15em;margin:2rem 0;text-shadow:0 0 40px rgba(212,175,55,0.6);animation:glow 2s ease-in-out infinite}
+.proposal-buttons{display:flex;gap:2rem;margin-top:3rem;flex-wrap:wrap;justify-content:center}
+.btn-yes{padding:1.5rem 4rem;background:#d4af37;border:none;color:#000;font-family:'Cinzel',serif;font-size:1.3rem;letter-spacing:0.2em;cursor:pointer;box-shadow:0 0 40px rgba(212,175,55,0.8);transition:all 0.3s ease;animation:pulse 2s ease-in-out infinite}
+.btn-yes:hover{transform:scale(1.1);box-shadow:0 0 60px rgba(212,175,55,1)}
+.btn-maybe{padding:0.5rem 1rem;background:transparent;border:1px solid rgba(212,175,55,0.3);color:rgba(212,175,55,0.5);font-family:'Playfair Display',serif;font-size:0.8rem;cursor:pointer;transition:all 0.3s ease}
+.btn-maybe:hover{opacity:0.3;transform:scale(0.9)}
+.celebration{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+.firework{position:absolute;width:6px;height:6px;border-radius:50%;background:#d4af37}
+.confetti{position:absolute;width:10px;height:10px;background:#d4af37}
+.final-message{font-family:'Great Vibes',cursive;font-size:clamp(2rem,6vw,4rem);color:#d4af37;margin-top:2rem}
+.photo-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:3rem;max-width:900px}
+.gallery-frame{border:3px solid #d4af37;padding:10px;background:rgba(0,0,0,0.6);position:relative;overflow:hidden;aspect-ratio:3/4}
+.gallery-frame img{width:100%;height:100%;object-fit:cover}
+.progress-bar{display:flex;gap:0.5rem;margin:2rem auto;justify-content:center;flex-wrap:wrap}
+.progress-dot{width:40px;height:40px;border-radius:50%;border:2px solid rgba(212,175,55,0.3);display:flex;align-items:center;justify-content:center;color:rgba(212,175,55,0.3);font-family:'Cinzel',serif;font-size:0.9rem}
+.progress-dot.unlocked{border-color:#d4af37;background:rgba(212,175,55,0.2);color:#d4af37;box-shadow:0 0 15px rgba(212,175,55,0.4)}
+.champagne-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3000;opacity:0;pointer-events:none;transition:opacity 0.5s ease;text-align:center}
+.champagne-toast.show{opacity:1;pointer-events:auto}
+.champagne-bottle{width:80px;height:200px;background:linear-gradient(180deg,#1a4d1a,#2d5016);border-radius:10px 10px 30px 30px;position:relative;cursor:pointer;transition:transform 0.3s ease;margin:0 auto}
+.champagne-bottle:hover{transform:scale(1.1)}
+.champagne-neck{position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:20px;height:50px;background:linear-gradient(180deg,#0d260d,#1a4d1a);border-radius:5px 5px 0 0}
+.champagne-cork{position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:25px;height:30px;background:#8b7355;border-radius:50% 50% 0 0;transition:all 0.5s ease}
+.champagne-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:80px;background:rgba(212,175,55,0.9);border:2px solid #d4af37;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:0.7rem;color:#000;text-align:center;padding:0.5rem}
+.toast-text{margin-top:2rem;font-family:'Cinzel',serif;color:#d4af37;font-size:1.2rem;letter-spacing:0.15em}
+.champagne-bubble{position:absolute;width:10px;height:10px;background:radial-gradient(circle,rgba(255,255,255,0.9),rgba(212,175,55,0.6));border-radius:50%;animation:bubbleRise 2s ease-out forwards}
+.constellation-container{width:100%;max-width:600px;height:400px;position:relative;margin:2rem auto;background:radial-gradient(circle,rgba(0,20,40,0.6),rgba(0,0,0,0.4));border:2px solid rgba(212,175,55,0.3);border-radius:8px}
+.star{position:absolute;width:50px;height:50px;background:radial-gradient(circle,#ffd700,#d4af37);border-radius:50%;box-shadow:0 0 20px #d4af37,0 0 40px rgba(212,175,55,0.6);opacity:0;animation:starAppear 1s ease-out forwards;cursor:pointer;transition:transform 0.3s ease;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:16px;font-weight:bold;color:#000}
+.star:hover{transform:scale(1.3)}
+.star.clicked{background:radial-gradient(circle,#fff,#ffd700);box-shadow:0 0 30px #fff,0 0 60px #d4af37;animation:starPulse 0.5s ease}
+.love-note{position:absolute;background:rgba(0,0,0,0.95);border:2px solid #d4af37;padding:1rem 1.5rem;border-radius:8px;color:#d4af37;font-size:1rem;opacity:0;pointer-events:none;z-index:100;transition:opacity 0.3s ease;box-shadow:0 4px 20px rgba(0,0,0,0.5);max-width:250px;text-align:center}
+.love-note.show{opacity:1}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+@keyframes floatUp{0%{transform:translateY(0) scale(0.8);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-420px) scale(1);opacity:0}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes glow{0%,100%{text-shadow:0 0 40px rgba(212,175,55,0.6)}50%{text-shadow:0 0 60px rgba(212,175,55,1),0 0 80px rgba(212,175,55,0.8)}}
+@keyframes starAppear{to{opacity:1}}
+@keyframes starPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
+@keyframes bubbleRise{0%{transform:translateY(0) scale(0);opacity:0}20%{opacity:1}100%{transform:translateY(-300px) translateX(var(--drift)) scale(1.5);opacity:0}}
+@media(max-width:768px){.game-container{padding:1.5rem}.bubble-area,.green-light-area{height:300px}.proposal-buttons{flex-direction:column;align-items:center}.constellation-container{height:300px}}
 </style>
 </head>
-
 <body>
 
-<!-- PASSWORD -->
-<div class="screen active password-screen" id="passwordScreen">
+<div class="champagne-toast" id="champagneToast">
+<div class="champagne-bottle" id="champagneBottle">
+<div class="champagne-cork"></div>
+<div class="champagne-neck"></div>
+<div class="champagne-label">FOR<br>VACHA</div>
+</div>
+<p class="toast-text">Click to celebrate! 🥂</p>
+</div>
+
+<div class="screen active" id="screen0">
+<div class="deco-corner top-left"></div>
+<div class="deco-corner top-right"></div>
 <h1 class="title-large">The Invitation</h1>
 <p class="subtitle">Enter the name only I call you</p>
-<input type="text" class="password-input" id="passwordInput" placeholder="...">
+<input type="text" class="password-input" id="passwordInput" placeholder="..." autocomplete="off" autofocus>
 <button class="btn-gold" id="unlockBtn">Enter</button>
 <p class="error-msg" id="errorMsg"></p>
+<div class="deco-corner bottom-left"></div>
+<div class="deco-corner bottom-right"></div>
 </div>
 
-<!-- INTRO -->
-<div class="screen" id="introScreen">
+<div class="screen" id="screen1">
 <h1 class="title-large">Welcome, Buttercup</h1>
-<button class="btn-gold" onclick="startGame(1)">Begin Our Journey</button>
+<div class="gatsby-quote">So we beat on, boats against the current, borne back ceaselessly into the past.<br><span style="opacity:0.6;font-size:0.9rem">— F. Scott Fitzgerald</span></div>
+<p class="subtitle">But our story flows forward, into forever</p>
+<div class="progress-bar" id="progressBar">
+<div class="progress-dot">W</div><div class="progress-dot">I</div><div class="progress-dot">L</div><div class="progress-dot">L</div>
+<div class="progress-dot">Y</div><div class="progress-dot">O</div><div class="progress-dot">U</div>
+<div class="progress-dot">B</div><div class="progress-dot">E</div><div class="progress-dot">M</div><div class="progress-dot">Y</div><div class="progress-dot">V</div>
+</div>
+<button class="btn-gold" id="startBtn">Begin Our Journey</button>
 </div>
 
-<!-- GAME 1 -->
-<div class="screen" id="game1Screen">
+<div class="screen" id="screen2">
 <div class="game-container">
 <h2 class="game-title">Champagne Dreams</h2>
-<p class="game-instructions">Catch the golden bubbles</p>
+<p class="game-instructions">Tap the golden bubbles to reveal my question</p>
 <div class="bubble-area" id="bubbleArea"></div>
 <div class="collected-words">
 <div class="word-slot" id="slot0">?</div>
@@ -87,150 +137,345 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 </div>
 </div>
 
-<!-- GAME 2 -->
-<div class="screen" id="game2Screen">
+<div class="screen" id="screen3">
+<div class="gatsby-quote">I was within and without, simultaneously enchanted and repelled by the inexhaustible variety of life.<br><span style="opacity:0.6;font-size:0.9rem">— The Great Gatsby</span></div>
+<p class="subtitle">With you, I am only within — enchanted, always.</p>
+<button class="btn-gold" id="btn1">Continue</button>
+</div>
+
+<div class="screen" id="screen4">
 <div class="game-container">
 <h2 class="game-title">Our Memory Lane</h2>
+<p class="game-instructions">Answer these to unlock the next words</p>
 <div id="quizContainer"></div>
 </div>
 </div>
 
-<!-- GAME 3 -->
-<div class="screen" id="game3Screen">
+<div class="screen" id="screen5">
+<div class="gatsby-quote">He looked at her the way all women want to be looked at by a man.<br><span style="opacity:0.6;font-size:0.9rem">— The Great Gatsby</span></div>
+<p class="subtitle">The way I look at you, every single day.</p>
+<button class="btn-gold" id="btn2">Continue</button>
+</div>
+
+<div class="screen" id="screen6">
 <div class="game-container">
 <h2 class="game-title">The Green Light</h2>
+<p class="game-instructions">Swipe up to reach for the light, just as I reach for you</p>
 <div class="green-light-area" id="greenLightArea">
 <div class="green-light" id="greenLight"></div>
+<p class="reach-text">Swipe upward ↑</p>
 </div>
 </div>
 </div>
 
-<!-- FINAL -->
-<div class="screen" id="finalScreen">
+<div class="screen" id="screen7">
+<div class="gatsby-quote">And I like large parties. They're so intimate. At small parties there isn't any privacy.<br><span style="opacity:0.6;font-size:0.9rem">— The Great Gatsby</span></div>
+<p class="subtitle">But this moment? This is just for us.</p>
+<h1 class="proposal-question">Vacha, Will You Be My Valentine?</h1>
+<div class="proposal-buttons">
+<button class="btn-yes" id="yesBtn">Yes, Forever</button>
+<button class="btn-maybe" id="maybeBtn">Maybe...</button>
+</div>
+</div>
+
+<div class="screen" id="screen8">
 <h1 class="title-large">She Said Yes!</h1>
+<p class="final-message">My Buttercup, My Valentine, My Everything</p>
+<div class="gatsby-quote">I love her and that's the beginning and end of everything.<br><span style="opacity:0.6;font-size:0.9rem">— F. Scott Fitzgerald</span></div>
+<div style="max-width:600px;margin:3rem auto;padding:2rem;background:rgba(0,0,0,0.4);border:2px solid rgba(212,175,55,0.3)">
+<h3 style="font-family:'Cinzel',serif;color:#d4af37;text-align:center;margin-bottom:2rem;letter-spacing:0.15em;font-size:1.5rem">Our Timeline</h3>
+<div style="text-align:left;color:#d4af37;line-height:2">
+<p style="margin-bottom:1.5rem;padding-left:1rem;border-left:3px solid #d4af37"><strong style="font-family:'Cinzel',serif">January 13, 2024</strong><br><span style="opacity:0.9">The day our forever began</span></p>
+<p style="margin-bottom:1.5rem;padding-left:1rem;border-left:3px solid rgba(212,175,55,0.5)"><strong style="font-family:'Cinzel',serif">Every Day Since</strong><br><span style="opacity:0.9">Falling more in love with you</span></p>
+<p style="margin-bottom:1.5rem;padding-left:1rem;border-left:3px solid #d4af37"><strong style="font-family:'Cinzel',serif">Today</strong><br><span style="opacity:0.9">Asking you to be my Valentine</span></p>
+<p style="padding-left:1rem;border-left:3px solid rgba(212,175,55,0.5)"><strong style="font-family:'Cinzel',serif">Forever</strong><br><span style="opacity:0.9">Every tomorrow with you</span></p>
+</div>
+</div>
+<div class="photo-gallery">
+<div class="gallery-frame"><img src="images/vacha1.jpg" alt="Us"></div>
+<div class="gallery-frame"><img src="images/vacha2.jpg" alt="Us"></div>
+<div class="gallery-frame"><img src="images/vacha3.jpg" alt="Us"></div>
+<div class="gallery-frame"><img src="images/vacha4.jpg" alt="Us"></div>
+</div>
+<button class="btn-gold" id="toStarsBtn">Read My Heart</button>
 </div>
 
-<audio id="bgMusic" loop>
-<source src="song.mp3" type="audio/mpeg">
-</audio>
+<div class="screen" id="screen9">
+<h2 class="game-title">Written in the Stars</h2>
+<p class="game-instructions">Tap each star to reveal a love note 💫</p>
+<div class="constellation-container" id="constellationContainer"></div>
+<p class="subtitle" style="margin-top:2rem">Your name shines brighter than any constellation</p>
+<button class="btn-gold" id="toLetterBtn" style="display:none">Continue to My Letter</button>
+</div>
+
+<div class="screen" id="screen10">
+<div class="game-container" style="max-width:700px">
+<h2 class="game-title">A Letter to My Buttercup</h2>
+<div style="text-align:left;font-size:1.1rem;line-height:2;color:#d4af37">
+<p style="margin-bottom:1.5rem">Dearest Vacha,</p>
+<p style="margin-bottom:1.5rem">They say Gatsby threw lavish parties hoping to catch Daisy's attention across the bay. I understand him now. Since January 13, 2024, every moment has been a celebration of you — every song I hear, every sunset I see, every breath I take is a quiet party thrown in your honor.</p>
+<p style="margin-bottom:1.5rem">You are my green light across the water — the dream I reach for, the hope that keeps me going, the future I've been sailing toward my entire life. And unlike Gatsby, I found you. I reached you. And you chose me back.</p>
+<p style="margin-bottom:1.5rem">In a world of noise and chaos, you are my stillness. In a life of questions, you are my answer. You make ordinary days feel like grand adventures and quiet nights feel like the most precious treasures.</p>
+<p style="margin-bottom:1.5rem">Your smile is the first thing I think of when I wake up and the last image in my mind before I sleep. Your laugh is my favorite melody. Your presence is my home.</p>
+<p style="margin-bottom:1.5rem">I promise to be your safe harbor in every storm, your biggest cheerleader in every victory, and your constant companion in every journey. I promise to love you not just on the grand occasions, but in the small, quiet moments — the coffee mornings, the late-night conversations, the comfortable silences.</p>
+<p style="margin-bottom:1.5rem">Like Gatsby, I would wait a lifetime for you. But unlike him, I don't have to — because you're here, you're real, and you're mine.</p>
+<p style="margin-bottom:1.5rem">Happy Valentine's Day, my Buttercup. Thank you for saying yes. Thank you for choosing us. Thank you for being the most beautiful chapter in my story.</p>
+<p>Forever and always,<br><span style="font-family:'Cinzel',serif;font-size:1.3rem;color:#d4af37;letter-spacing:0.1em;margin-top:1rem;display:inline-block">Ravat</span></p>
+<div style="text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(212,175,55,0.3)">
+<p style="font-style:italic;opacity:0.8">"I love her and that's the beginning and end of everything."<br><span style="opacity:0.6;font-size:0.9rem">— F. Scott Fitzgerald</span></p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="celebration" id="celebration"></div>
+
+<audio id="bgMusic" loop><source src="song.mp3" type="audio/mpeg"></audio>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded',function(){
+const music=document.getElementById('bgMusic');
+const passwordInput=document.getElementById('passwordInput');
+const unlockBtn=document.getElementById('unlockBtn');
+const errorMsg=document.getElementById('errorMsg');
+const progressDots=document.querySelectorAll('.progress-dot');
+let collectedBubbles=0;
+let quizCorrect=0;
+const bubbleWords=['WILL','YOU','BE','MY'];
 
-const screens = document.querySelectorAll(".screen");
-const music = document.getElementById("bgMusic");
-
-let collectedBubbles = 0;
-let quizCreated = false;
-
-function showScreen(index){
-screens.forEach(s=>s.classList.remove("active"));
-if(screens[index]) screens[index].classList.add("active");
+function go(n){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+document.getElementById('screen'+n).classList.add('active');
 }
 
-document.getElementById("unlockBtn").onclick = () => {
-const val = document.getElementById("passwordInput").value.trim().toLowerCase();
-if(val === "buttercup"){
-showScreen(1);
-music.volume = 0.3;
-music.play().catch(()=>{});
+unlockBtn.addEventListener('click',()=>{
+if(passwordInput.value.trim().toLowerCase()==='buttercup'){
+go(1);
+setTimeout(()=>{music.volume=0.3;music.play().catch(e=>console.log(e))},500);
 }else{
-document.getElementById("errorMsg").textContent = "Try again, my love";
-document.getElementById("errorMsg").classList.add("show");
+passwordInput.classList.add('shake');
+errorMsg.textContent='Try again, my love';
+errorMsg.classList.add('show');
+setTimeout(()=>{passwordInput.classList.remove('shake');errorMsg.classList.remove('show')},2000);
 }
-};
+});
+passwordInput.addEventListener('keypress',e=>{if(e.key==='Enter')unlockBtn.click()});
 
-window.startGame = (num)=>{
-if(num===1){ showScreen(2); createBubbles(); }
-if(num===2){ showScreen(3); createQuiz(); }
-if(num===3){ showScreen(4); initGreenLight(); }
-};
+document.getElementById('startBtn').addEventListener('click',()=>{
+go(2);
+createBubbles();
+});
 
 function createBubbles(){
-const area = document.getElementById("bubbleArea");
-if(!area) return;
-
-const words = ["WILL","YOU","BE","MY"];
-let i=0;
-
-const interval = setInterval(()=>{
-if(i>=words.length){ clearInterval(interval); return; }
-
-const bubble = document.createElement("div");
-bubble.className = "bubble";
-bubble.textContent = words[i];
-bubble.style.left = Math.random()*80 + "%";
-
-bubble.onclick = ()=>{
-const slot = document.getElementById("slot"+i);
-if(slot){
-slot.textContent = words[i];
-slot.classList.add("filled");
-}
-bubble.remove();
+const area=document.getElementById('bubbleArea');
+area.innerHTML='';
+collectedBubbles=0;
+let created=0;
+const int=setInterval(()=>{
+if(created>=4){clearInterval(int);return}
+const b=document.createElement('div');
+b.className='bubble';
+b.textContent=bubbleWords[created];
+b.style.left=(Math.random()*70+10)+'%';
+b.style.animationDelay=(Math.random()*1)+'s';
+const idx=created;
+b.addEventListener('click',()=>{
+b.style.opacity='0';
+b.style.transform='scale(2)';
+setTimeout(()=>b.remove(),300);
+document.getElementById('slot'+idx).textContent=bubbleWords[idx];
+document.getElementById('slot'+idx).classList.add('filled');
+if(progressDots[idx])progressDots[idx].classList.add('unlocked');
 collectedBubbles++;
-if(collectedBubbles===4){
-setTimeout(()=>startGame(2),800);
+if(collectedBubbles===4)setTimeout(()=>go(3),1000);
+});
+area.appendChild(b);
+created++;
+},1500);
 }
-};
 
-area.appendChild(bubble);
-i++;
-},1200);
-}
+document.getElementById('btn1').addEventListener('click',()=>{
+go(4);
+createQuiz();
+});
 
 function createQuiz(){
-if(quizCreated) return;
-quizCreated = true;
-
-const container = document.getElementById("quizContainer");
-if(!container) return;
-
-const q = document.createElement("div");
-q.className = "quiz-question";
-q.innerHTML = "<h3>What do I call you?</h3>";
-
-const opt1 = document.createElement("button");
-opt1.className="quiz-option";
-opt1.textContent="Buttercup";
-opt1.onclick=()=>startGame(3);
-
-const opt2 = document.createElement("button");
-opt2.className="quiz-option";
-opt2.textContent="Angel";
-
-q.appendChild(opt1);
-q.appendChild(opt2);
-container.appendChild(q);
+const c=document.getElementById('quizContainer');
+c.innerHTML='';
+quizCorrect=0;
+const qs=[
+{q:"When did our story begin?",o:["January 13, 2024","February 14, 2023","March 1, 2024"],c:0},
+{q:"What do I call you?",o:["Sweetheart","Buttercup","Angel"],c:1},
+{q:"What makes you most beautiful?",o:["Your smile","Your eyes","Everything"],c:2}
+];
+qs.forEach((q,qi)=>{
+const d=document.createElement('div');
+d.className='quiz-question';
+d.innerHTML='<h3>'+q.q+'</h3>';
+const od=document.createElement('div');
+od.className='quiz-options';
+q.o.forEach((op,oi)=>{
+const b=document.createElement('button');
+b.className='quiz-option';
+b.textContent=op;
+b.addEventListener('click',()=>{
+od.querySelectorAll('.quiz-option').forEach(x=>x.style.pointerEvents='none');
+if(oi===q.c){
+b.classList.add('correct');
+quizCorrect++;
+if(progressDots[4+qi])progressDots[4+qi].classList.add('unlocked');
+if(quizCorrect===3){
+const cb=document.createElement('button');
+cb.className='btn-gold';
+cb.textContent='Continue';
+cb.style.marginTop='2rem';
+cb.addEventListener('click',()=>go(5));
+c.appendChild(cb);
 }
+}else{
+b.style.opacity='0.3';
+setTimeout(()=>{od.querySelectorAll('.quiz-option').forEach(x=>x.style.pointerEvents='auto');b.style.opacity='1'},1000);
+}
+});
+od.appendChild(b);
+});
+d.appendChild(od);
+c.appendChild(d);
+});
+}
+
+document.getElementById('btn2').addEventListener('click',()=>{
+go(6);
+initGreenLight();
+});
 
 function initGreenLight(){
-const area = document.getElementById("greenLightArea");
-const light = document.getElementById("greenLight");
-if(!area || !light) return;
-
-let startY = 0;
-let dragging = false;
-
-area.addEventListener("touchstart",e=>{
-dragging = true;
-startY = e.touches[0].clientY;
-});
-
-area.addEventListener("touchmove",e=>{
-if(!dragging) return;
-const delta = startY - e.touches[0].clientY;
-if(delta > 100){
-light.classList.add("reached");
-setTimeout(()=>showScreen(5),1000);
-}
-});
-
-area.addEventListener("touchend",()=>dragging=false);
+const area=document.getElementById('greenLightArea');
+const light=document.getElementById('greenLight');
+let isDrag=false,startY=0;
+area.addEventListener('mousedown',e=>{isDrag=true;startY=e.clientY});
+area.addEventListener('touchstart',e=>{isDrag=true;startY=e.touches[0].clientY},{passive:true});
+area.addEventListener('mousemove',e=>{if(isDrag&&startY-e.clientY>50){light.classList.add('reached');for(let i=7;i<12;i++)if(progressDots[i])progressDots[i].classList.add('unlocked');setTimeout(()=>go(7),2000);isDrag=false}});
+area.addEventListener('touchmove',e=>{if(isDrag&&startY-e.touches[0].clientY>50){light.classList.add('reached');for(let i=7;i<12;i++)if(progressDots[i])progressDots[i].classList.add('unlocked');setTimeout(()=>go(7),2000);isDrag=false}},{passive:true});
+area.addEventListener('mouseup',()=>isDrag=false);
+area.addEventListener('touchend',()=>isDrag=false);
 }
 
+document.getElementById('yesBtn').addEventListener('click',()=>{
+go(8);
+createFireworks();
+createConfetti();
+setTimeout(()=>{document.getElementById('champagneToast').classList.add('show')},2000);
+});
+
+document.getElementById('maybeBtn').addEventListener('click',function(){
+this.style.opacity='0.2';
+setTimeout(()=>{this.style.opacity='1'},1000);
+});
+
+document.getElementById('champagneBottle').addEventListener('click',function(){
+const toast=document.getElementById('champagneToast');
+const cork=this.querySelector('.champagne-cork');
+cork.style.transform='translateX(-50%) translateY(-100px) rotate(45deg)';
+cork.style.opacity='0';
+setTimeout(()=>{
+for(let i=0;i<30;i++){
+setTimeout(()=>{
+const b=document.createElement('div');
+b.className='champagne-bubble';
+b.style.left='50%';
+b.style.top='100px';
+b.style.setProperty('--drift',(Math.random()*200-100)+'px');
+b.style.animationDelay=(Math.random()*0.5)+'s';
+toast.appendChild(b);
+setTimeout(()=>b.remove(),2100);
+},i*50);
+}
+},500);
+setTimeout(()=>toast.classList.remove('show'),3000);
+});
+
+document.getElementById('toStarsBtn').addEventListener('click',()=>{
+go(9);
+createStars();
+});
+
+function createStars(){
+const c=document.getElementById('constellationContainer');
+c.innerHTML='';
+const note=document.createElement('div');
+note.className='love-note';
+c.appendChild(note);
+const stars=[
+{x:15,y:25,l:'V',n:'You light up my darkest days'},
+{x:30,y:45,l:'A',n:'Every moment with you is magic'},
+{x:45,y:30,l:'C',n:'You are my favorite hello'},
+{x:60,y:50,l:'H',n:'My heart belongs to you'},
+{x:75,y:35,l:'A',n:'Forever grateful for you'}
+];
+let clicked=0;
+stars.forEach((s,i)=>{
+const st=document.createElement('div');
+st.className='star';
+st.style.left=s.x+'%';
+st.style.top=s.y+'%';
+st.style.animationDelay=(i*0.2)+'s';
+st.textContent=s.l;
+st.addEventListener('click',function(){
+if(!this.classList.contains('clicked')){
+this.classList.add('clicked');
+clicked++;
+note.textContent=s.n;
+note.style.left=s.x+'%';
+note.style.top=(s.y-15)+'%';
+note.classList.add('show');
+setTimeout(()=>note.classList.remove('show'),2500);
+if(clicked===5)setTimeout(()=>{document.getElementById('toLetterBtn').style.display='inline-block'},1500);
+}
+});
+c.appendChild(st);
+});
+}
+
+document.getElementById('toLetterBtn').addEventListener('click',()=>go(10));
+
+function createFireworks(){
+const cel=document.getElementById('celebration');
+for(let i=0;i<50;i++){
+setTimeout(()=>{
+const f=document.createElement('div');
+f.className='firework';
+f.style.left=Math.random()*100+'%';
+f.style.top=Math.random()*100+'%';
+const a=Math.random()*Math.PI*2,d=100+Math.random()*200;
+f.style.transition='all 1.5s ease-out';
+cel.appendChild(f);
+setTimeout(()=>{f.style.transform='translate('+Math.cos(a)*d+'px,'+Math.sin(a)*d+'px)';f.style.opacity='0'},50);
+setTimeout(()=>f.remove(),1600);
+},i*60);
+}
+}
+
+function createConfetti(){
+const cel=document.getElementById('celebration');
+for(let i=0;i<100;i++){
+setTimeout(()=>{
+const c=document.createElement('div');
+c.className='confetti';
+c.style.left=Math.random()*100+'%';
+c.style.top='-20px';
+c.style.background=['#d4af37','#000','#fff'][Math.floor(Math.random()*3)];
+c.style.transform='rotate('+Math.random()*360+'deg)';
+c.style.transition='all 3s ease-in';
+cel.appendChild(c);
+setTimeout(()=>{c.style.top='100vh';c.style.transform='rotate('+Math.random()*720+'deg)'},50);
+setTimeout(()=>c.remove(),3100);
+},i*40);
+}
+}
+
+document.addEventListener('touchstart',()=>{},{passive:true});
 });
 </script>
-
 </body>
 </html>
